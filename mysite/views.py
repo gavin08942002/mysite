@@ -21,8 +21,6 @@ def menu(request):
     food1={'name':'蕃茄炒蛋','price':'25','comment':'好吃','is _spicy':False}
     food2={'name':'蒜泥白肉','price':'100','comment':'人氣推薦','is _spicy':True}
     foods = [food1,food2]
-#test
-    #test2
     return render(request,'menu.html',locals())
 def welcome(request):
     if 'user_name' in request.GET and request.GET['user_name'] !='':
