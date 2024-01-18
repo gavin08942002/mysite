@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Restaurants</title>
+        <style>
+            table,th,td{
+                border:1px solid black;
+
+            }
+        </style>
+    </head>
+    <body>
+        <h2>餐廳列表</h2>
+        <table>
+            <tr>
+                <th>店名</th>
+                <th>電話</th>
+                <th>地址</th>
+            </tr>
+            {% for r in restaurants %}
+            
+            
+            <tr>
+                <th>{{r.name}}</th>
+                <th>{{r.phone_number}}</th>
+                <th>{{r.address}}</th>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+
+</html>
