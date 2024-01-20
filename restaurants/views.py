@@ -1,5 +1,7 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from requests import Request
+import requests
 from restaurants.models import Restaurant,Food
 
 def here(request):
@@ -20,12 +22,12 @@ def math(request,a,b):
     return render(request,'math.html',locals())
 
 def menu(request):
-    get_host= request.get_host
-    get_full_path =request.get_full_path
-    is_secure = request.is_secure
-    path =request.path
-    restaurants =Restaurant.objects.all()
-    return render(request,'menu.html',locals())
+    if 'id' in request.GET and request.GET['id'] !='':
+        restaurant = Restaurant.objects.get(id = request.GET['id'])
+        return render(request,"menu.html",locals())
+    else:        
+        return HttpResponseRedirect("/restaurants_list")
+
 
 def meta(request):
     values = request.META.items()

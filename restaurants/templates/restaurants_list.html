@@ -12,8 +12,11 @@
     </head>
     <body>
         <h2>餐廳列表</h2>
+        <form action="/menu/" method="get">
         <table>
             <tr>
+                <th>連結</th>
+                <th>選取</th>
                 <th>店名</th>
                 <th>電話</th>
                 <th>地址</th>
@@ -22,12 +25,15 @@
             
             
             <tr>
-                <th>{{r.name}}</th>
-                <th>{{r.phone_number}}</th>
-                <th>{{r.address}}</th>
+                <td><a href="/menu/?id={{r.id}}">{{r.id}}</a></td>
+                <td><input type="radio" name="id" value="{{r.id}}"></td>
+                <td>{{r.name}}</td>
+                <td>{{r.phone_number}}</td>
+                <td>{{r.address}}</td>
             </tr>
             {% endfor %}
         </table>
+        <input type="submit" value="觀看menu">
+        </form>
     </body>
-
 </html>
