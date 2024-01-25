@@ -1,3 +1,4 @@
+from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.utils.translation import gettext as _
 
@@ -20,3 +21,9 @@ class Food(models.Model):
 
     def __str__(self):
        return self.name   
+class Comment (models.Model):
+    visitor = models.CharField(max_length =20)
+    content = models.CharField(max_length=200)
+    email = models.EmailField(max_length = 20)
+    date_time = models.DateTimeField()
+    restaurant = models.ForeignKey(Restaurant, on_delete = models.CASCADE)

@@ -1,8 +1,33 @@
+import datetime
+from time import time
+from xmlrpc.client import DateTime
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from pytz import timezone
 from requests import Request
 import requests
-from restaurants.models import Restaurant,Food
+from tomlkit import date
+from datetime import datetime
+from restaurants.models import Restaurant,Food,Comment
+
+def year_archive(request, year):
+    return HttpResponse(f"Year archive for {year}")
+
+
+def comment(request,id):
+    if id is not None and id != "":
+        r = Restaurant.objects.get(id=id)
+    else:
+        return HttpResponseRedirect("/restaurants_list")
+    if request.POST:
+        visitor = request.POST['visitor']
+        content = request.POST['content']
+        email = request.POST['email']
+        tz = timezone("Asia/Taipei")
+        date_time = tz.localize(datetime.now())
+        Comment.objects.create(visitor=visitor, email=email, content=content, date_time=date_time, restaurant=r)
+    return render(request, 'comments.html', locals())
+
 
 def here(request):
     return HttpResponse('Mon I am here!')
@@ -34,7 +59,7 @@ def meta(request):
     html = []
     for k, v in values:
         html.append('<tr><td>{0}</td><td>{1}</td></tr>'.format(k,v))
-        return HttpResponse('<table>{0}</table>'.format('\n'.join(html)))
+    return HttpResponse('<table>{0}</table>'.format('\n'.join(html)))
 
 
 def menu1(request):
@@ -48,3 +73,4 @@ def menu1(request):
 def list_restaurants(request):
     restaurants = Restaurant.objects.all()
     return render(request,'restaurants_list.html',locals())
+    
